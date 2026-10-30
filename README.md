@@ -1,102 +1,175 @@
-# Employeer_Ratings_Analysis_of_Indian_Companies
+# 🇮🇳 Companies in India – Data Analysis Using Python
 
+## 📌 Project Overview
 
-Industry distribution, headquarters concentration, and employer-rating patterns in the Companies in India dataset
+Choosing a company to work for is an important decision, especially for job seekers who want to understand the working environment, employee feedback, and career opportunities available in different organizations.
 
-An exploratory data analysis (EDA) in Python of the Kaggle dataset Companies in India. The project cleans the raw file, explores how companies are spread across industries and headquarters cities, and looks at how ratings, review counts, and other employer-profile metrics relate to each other.
+This project explores a dataset containing information about companies in India. Using Python, I aim to understand the available company information, explore employee ratings, and identify patterns in company reviews, salaries, job listings, and other workplace-related details.
 
-Dataset at a glance
-Item	Detail
-File	Companies_in_India.csv
-Raw size	10,000 rows x 11 columns (including an unnamed index column)
-After cleaning	9,402 companies, 12 columns (index dropped, hq_city and other_locations added)
-Granularity	One row per company
+The goal is to turn raw company data into meaningful insights that can help job seekers and other interested users better understand the companies represented in the dataset.
 
-Columns
+## 🎯 Project Objectives
 
-Column	Meaning
-name	Company name
-rating	Average employee rating (1.0 to 5.0)
-company_type	Industry / sector label (84 distinct values after cleaning)
-hq	Headquarters city plus number of other locations, e.g. Bengaluru +445 other locations
-number_of_reviews, salaries, interviews, jobs, benefits, photos	Counts of employer-profile items, stored as text such as 1.2L, 74.3k
+The main objectives of this project are:
 
-Important: This is an employer-profile dataset (ratings, reviews, salary and interview counts). It does not contain registration dates, company status, listing status, or authorized / paid-up capital. Analyses that depend on those fields are out of scope for this data.
+* Explore company ratings and understand how they vary across organizations.
+* Identify companies with higher numbers of employee reviews.
+* Examine the distribution of companies across different industries.
+* Explore salary-related information available in the dataset.
+* Analyze job listings, interview information, and employee benefits.
+* Compare companies based on their available information.
+* Identify data quality issues and prepare the dataset for analysis.
+* Present findings through clear visualizations and summaries.
 
-Data cleaning
-Issue found	Action
-Unnamed index column	Dropped
-273 shifted rows: the headquarters value sat in company_type and hq was empty	Moved the value back to hq; company_type set to missing
--- used as a missing-value placeholder	Converted to NaN
-Counts stored as text with suffixes (k = thousand, L = lakh = 100,000)	Parsed into numbers
-HQ text mixed with +N other locations	Split into hq_city and other_locations
-City spelling variants (Bangalore / Bengaluru, Gurgaon, Delhi)	Standardized to Bengaluru, Gurugram, New Delhi
-598 exact duplicate rows	Removed (10,000 to 9,402)
+## 📂 Dataset Information
 
-Remaining missing values after cleaning: photos 5,202, jobs 3,352, company_type 252, a handful in rating, salaries, interviews, and benefits.
+**Dataset Name:** Companies in India
 
-The cleaned file is saved at data/cleaned/companies_cleaned.csv.
+**Source:** [Kaggle – Companies in India](https://www.kaggle.com/datasets/dhruvnegi2006/companies-in-india)
 
-Key findings
+**File Format:** CSV
 
-All numbers below come from the cleaned data (9,402 companies).
+**Number of Records:** 10,000
 
-1. Industry distribution
-84 distinct industry labels. The top 10 industries account for 46.4% of companies.
-IT Services & Consulting is the largest group (1,222 companies, about 13%), followed by Engineering & Construction (456), Auto Components (408), Industrial Machinery (372), and Pharma (369).
+**Number of Columns:** 11
 
-Industries
+### Dataset Columns
 
-2. Geographic concentration
-Companies are headquartered in 257 distinct cities, but they are highly concentrated: the top 5 cities hold 55.3% and the top 10 hold 80.9%.
-Largest hubs: Mumbai (1,445), Bengaluru (1,438), New Delhi (808), Chennai (754), Pune (750), Hyderabad (738), Gurugram (681).
+| Column              | Description                              |
+| ------------------- | ---------------------------------------- |
+| `name`              | Name of the company                      |
+| `rating`            | Overall company rating                   |
+| `company_type`      | Type or industry of the company          |
+| `hq`                | Company headquarters and other locations |
+| `number_of_reviews` | Number of reviews available              |
+| `salaries`          | Number of salary-related entries         |
+| `interviews`        | Number of interview-related entries      |
+| `jobs`              | Number of job listings                   |
+| `benefits`          | Number of benefits-related entries       |
+| `photos`            | Number of company photos                 |
+| `Unnamed: 0`        | Index column included in the dataset     |
 
-Cities
+*Note: The columns such as `salaries`, `interviews`, `jobs`, and `benefits` represent counts of available entries, not necessarily salary amounts or direct measurements of employee benefits.*
 
-3. Ratings
-Ratings are tightly clustered: mean 3.73, median 3.8. 30.7% of companies rate 4.0 or higher and only 4.3% (407) rate below 3.0.
-Among industries with at least 50 companies, the highest averages are Government (4.00), Non-Profit (3.92), Oil & Gas (3.89), Building Material (3.89), and Real Estate (3.89).
-The lowest are Accounting & Auditing (3.45), Analytics & KPO (3.45), BPO (3.48), and Management Consulting (3.48).
-IT Services & Consulting, the largest industry, averages 3.57, below the overall 3.73.
+## 🛠️ Tools and Technologies
 
-Ratings Top rated industries
+This project is being developed using Python and its data analysis libraries.
 
-4. City comparison
+* **Python** – Main programming language
+* **Pandas** – Data loading, cleaning, and manipulation
+* **NumPy** – Numerical operations
+* **Matplotlib** – Data visualization
+* **Seaborn** – Statistical visualizations
+* **Jupyter Notebook** – Analysis and documentation
 
-Average rating differs only slightly between major hubs: New Delhi and Ahmedabad lead at 3.78, and Bengaluru is lowest at 3.67. The spread is small, so city alone is a weak differentiator.
+## 🔍 Project Workflow
 
-5. Relationships between metrics (Spearman correlation)
-number_of_reviews is strongly related to salaries (0.83), interviews (0.79), and benefits (0.74). Larger, better-known employers simply collect more of everything.
-number_of_reviews and other_locations correlate moderately (0.57): companies with more locations tend to have more reviews.
-Rating is only weakly related to any other metric (about 0.06 with review count, 0.16 with number of locations). Popularity and size do not predict how well a company is rated.
+I will follow a structured data analysis process to understand the dataset and extract useful information.
 
-Rating vs reviews
+### 1. Data Understanding
 
-6. Review volume is highly skewed
-TCS has the most reviews (120,000), followed by Accenture (74,300), Wipro (65,700), Cognizant (62,100), and Capgemini (54,000).
-The top 10% of companies (1,100+ reviews) hold about 61% of all reviews.
-Limitations
-Not a registry. The data reflects companies with employer profiles on a review platform, not every company registered in India. Findings describe this dataset, not the whole Indian corporate sector.
-Selection bias. Every company has at least 111 reviews, so small and new firms are absent. Large IT, services, and consumer-facing employers are likely over-represented.
-Ratings are self-reported by employees and can be skewed by who chooses to review.
-Industry labels are missing for 252 companies, and jobs and photos are missing for a large share of rows.
-Headquarters cities come from a single field; companies with many offices are assigned one city.
-24 company names appear more than once with different details after de-duplication; these were kept as separate records.
-No registration dates exist, so no time-series or registration-trend analysis was possible.
+* Load the dataset into Python.
+* Understand the number of rows and columns.
+* Examine column names and data types.
+* Explore sample records.
+* Understand what each column represents.
 
-indian-company-landscape-analysis/
-├── data/
-│   ├── raw/Companies_in_India.csv
-│   └── cleaned/companies_cleaned.csv
-├── notebooks/
-│   └── company_analysis.ipynb
-├── images/
-│   ├── industries.png
-│   ├── cities.png
-│   ├── ratings.png
-│   ├── top_rated_industries.png
-│   └── rating_vs_reviews.png
-├── analysis.py              # same analysis as a script
-└── README.md
+### 2. Data Quality Assessment
 
+* Check for missing values.
+* Identify duplicate records.
+* Examine inconsistent text values.
+* Identify incorrect or unusual ratings.
+* Check whether numerical information is stored in the correct format.
+
+### 3. Data Cleaning and Preprocessing
+
+* Remove unnecessary columns, if appropriate.
+* Handle missing values.
+* Remove duplicate records where necessary.
+* Standardize company and industry names.
+* Convert relevant columns into suitable data types.
+* Clean numerical values containing suffixes such as `k` and `L`, where appropriate.
+
+### 4. Exploratory Data Analysis (EDA)
+
+Explore the dataset to answer questions such as:
+
+* Which companies have the highest ratings?
+* Which companies have the most employee reviews?
+* Which company types are most common?
+* How are company ratings distributed?
+* Which companies have more job listings?
+* How do reviews, salary entries, and interview entries vary across companies?
+* Are there any noticeable patterns between company ratings and the number of reviews?
+
+### 5. Data Visualization
+
+Create visualizations to communicate the analysis clearly.
+
+Planned visualizations include:
+
+* Top-rated companies.
+* Company distribution by type.
+* Rating distribution.
+* Companies with the highest number of reviews.
+* Job listings across companies.
+* Comparison of reviews, salaries, and interview entries.
+* Relationship between company ratings and review counts.
+
+### 6. Insights and Recommendations
+
+* Summarize the important patterns identified during analysis.
+* Highlight interesting observations about the companies.
+* Explain what the findings may mean for job seekers.
+* Mention data limitations that could affect interpretation.
+
+## 📊 Expected Outcome
+
+By the end of this project, I aim to develop a better understanding of the company information available in the dataset.
+
+The analysis will help explore company ratings, industry distribution, review activity, job listings, and other available indicators. Visualizations and findings will be documented to make the information easier to understand.
+
+## ⚠️ Dataset Limitations
+
+A few limitations should be considered while interpreting the data:
+
+* The dataset contains company-level information and may not represent every company in India.
+* Ratings and review counts do not necessarily represent the experience of every employee.
+* Salary-related values appear to represent the number of salary entries rather than actual salary amounts.
+* Job listings and other counts may change over time.
+* The dataset may contain missing, inconsistent, or outdated information.
+* Relationships identified during analysis should not automatically be interpreted as cause-and-effect relationships.
+
+## 📁 Project Structure
+
+```text
+Companies-in-India-Analysis/
+│
+├── Dataset/
+│   └── companies_in_india.csv
+│
+├── Notebooks/
+│   ├── 01_Data_Understanding.ipynb
+│   ├── 02_Data_Quality_Assessment.ipynb
+│   ├── 03_Data_Cleaning.ipynb
+│   ├── 04_Exploratory_Data_Analysis.ipynb
+│   ├── 05_Data_Visualization.ipynb
+│   └── 06_Insights_and_Recommendations.ipynb
+│
+├── Visualizations/
+│
+├── README.md
+└── requirements.txt
+```
+
+## 🚀 Project Status
+
+**Status:** In Progress
+
+This project is being developed step by step, starting with understanding the dataset and assessing its quality, followed by data cleaning, exploratory analysis, visualization, and insight generation.
+
+---
+
+*This project is part of my continuous learning journey in Python and Data Analytics. My focus is on developing practical analytical skills and learning how to turn raw data into meaningful business insights.*
 
