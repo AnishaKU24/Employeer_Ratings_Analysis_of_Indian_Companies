@@ -1,4 +1,4 @@
-# 🇮🇳 Companies in India – Data Analysis Using Python
+# Companies in India – Data Analysis Using Python
 
 ## 📌 Project Overview
 
